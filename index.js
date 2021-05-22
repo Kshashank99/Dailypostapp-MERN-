@@ -18,16 +18,24 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
 app.use('/posts',postRoutes);
+
 // http://wwww.mongodb.com/cloud/atlas
 
 
 const PORT = process.env.PORT || 5000;
 
+// app.get('/',(req,res)=>{
+//   res.send('Hello to memories API')
+// })
+
 // This verifies if db is connected successfully or not, if yes then app 
 // listen on the given port no.or else it will throw an error
-mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://shashank_project:mongodb@cluster0.adfuf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' || 'mongodb://localhost/myFirstDatabase', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
   .catch((error) => console.log(`${error} did not connect`));
 
   // to avoid warning in console
 mongoose.set('useFindAndModify', false);   
+if(process.env.NODE_ENV==='production'){
+  app.use(express.static('client/build'));
+}
