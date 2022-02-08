@@ -11,7 +11,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-// import { signin, signup } from "../../actions/auth";
+import { signin, signup } from "../../actions/auth";
 import { AUTH } from "../../constants/actionTypes";
 import Icon from "./icons";
 import useStyles from "./styles";
@@ -44,17 +44,29 @@ const SignUp = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log("====================================");
-		console.log(form);
+		console.log(isSignup);
 		console.log("====================================");
-		// if (isSignup) {
-		// 	dispatch(signup(form, history));
-		// } else {
-		// 	dispatch(signin(form, history));
-		// }
+		if (isSignup) {
+			dispatch(signup(form, history));
+		} else {
+			console.log(form);
+			dispatch(signin(form, history));
+		}
 	};
 
+	// WHEN A NEW USER SIGN UP THROUGH GOOGLE IT RETURN AN OBJECT CONTAINING ALL INFORMATION ABOIUT THE USER LIKE ID, NAME, PHOTO ETC.
+	// eg. result:
+	// email: "coolshashank357@gmail.com"
+	// familyName: "kumar"
+	// givenName: "shashank"
+	// googleId: "108957901435727843201"
+	// imageUrl: "https://lh3.googleusercontent.com/a/AATXAJxPYexyldcxSXC_ga_CMCFSHqyP6B9te-GKAfOO=s96-c"
+	// name: "shashank kumar"
+	// [[Prototype]]: Object
+	// token: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MmU0NTBhMzVhMjA4MWZhYTFkOWF
 	const googleSuccess = async (res) => {
 		console.log(res);
+		// HERE WE USE OPTIONAL CHAINNG SO THAT IT DOES NOT THROW ERROR WHEN res OBJECT DOESNT EXIST AND IT SIMPLY ASSIGN UNDEFINEd TO result
 		const result = res?.profileObj;
 		const token = res?.tokenId;
 
@@ -70,8 +82,11 @@ const SignUp = () => {
 	const googleError = () =>
 		alert("Google Sign In was unsuccessful. Try again later");
 
-	const handleChange = (e) =>
+	const handleChange = (e) => {
+		console.log(e.target);
+		console.log(e.target.value);
 		setForm({ ...form, [e.target.name]: e.target.value });
+	};
 
 	return (
 		<Container component='main' maxWidth='xs'>
@@ -131,24 +146,7 @@ const SignUp = () => {
 						className={classes.submit}>
 						{isSignup ? "Sign Up" : "Sign In"}
 					</Button>
-					<GoogleLogin
-						clientId='1060169156463-88ge0gok37vl7i5a82mjjpl6pg0ddbbo.apps.googleusercontent.com'
-						render={(renderProps) => (
-							<Button
-								className={classes.googleButton}
-								color='primary'
-								fullWidth
-								onClick={renderProps.onClick}
-								disabled={renderProps.disabled}
-								startIcon={<Icon />}
-								variant='contained'>
-								Google Sign In
-							</Button>
-						)}
-						onSuccess={googleSuccess}
-						onFailure={googleError}
-						cookiePolicy='single_host_origin'
-					/>
+
 					<Grid container justify='flex-end'>
 						<Grid item>
 							<Button onClick={switchMode}>
@@ -159,6 +157,24 @@ const SignUp = () => {
 						</Grid>
 					</Grid>
 				</form>
+				<GoogleLogin
+					clientId='1060169156463-88ge0gok37vl7i5a82mjjpl6pg0ddbbo.apps.googleusercontent.com'
+					render={(renderProps) => (
+						<Button
+							className={classes.googleButton}
+							color='primary'
+							fullWidth
+							onClick={renderProps.onClick}
+							disabled={renderProps.disabled}
+							startIcon={<Icon />}
+							variant='contained'>
+							Google Sign In
+						</Button>
+					)}
+					onSuccess={googleSuccess}
+					onFailure={googleError}
+					cookiePolicy='single_host_origin'
+				/>
 			</Paper>
 		</Container>
 	);

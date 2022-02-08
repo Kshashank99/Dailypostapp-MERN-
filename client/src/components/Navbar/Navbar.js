@@ -11,9 +11,9 @@ import useStyles from "./styles";
 const Navbar = () => {
 	// RETIRIVING REAL USER FROM LOCAL STORAGE
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-	console.log("====================================");
-	console.log(user);
-	console.log("====================================");
+	// console.log("====================================");
+	// console.log(user);
+	// console.log("====================================");
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const history = useHistory();
@@ -26,7 +26,7 @@ const Navbar = () => {
 
 		setUser(null);
 	};
-
+	// THIS USEFFECT GET TRIGGERE WHEN  ROUTER CHANGES FROM '/AUTH' TO '/'
 	useEffect(() => {
 		const token = user?.token;
 

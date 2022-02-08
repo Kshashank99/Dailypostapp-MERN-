@@ -3,8 +3,8 @@ import {
 	CREATE,
 	UPDATE,
 	DELETE,
-	LIKE,
-	DISLIKE
+	LIKE
+	// DISLIKE
 } from "../constants/actionTypes";
 
 import * as api from "../api/index.js";
@@ -49,15 +49,15 @@ export const likePost = (id) => async (dispatch) => {
 		console.log(error.message);
 	}
 };
-export const DislikePost = (id) => async (dispatch) => {
-	try {
-		const { data } = await api.DislikePost(id);
+// export const DislikePost = (id) => async (dispatch) => {
+// 	try {
+// 		const { data } = await api.DislikePost(id);
 
-		dispatch({ type: DISLIKE, payload: data });
-	} catch (error) {
-		console.log(error.message);
-	}
-};
+// 		dispatch({ type: DISLIKE, payload: data });
+// 	} catch (error) {
+// 		console.log(error.message);
+// 	}
+// };
 
 export const deletePost = (id) => async (dispatch) => {
 	try {
