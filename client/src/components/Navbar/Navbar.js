@@ -32,7 +32,7 @@ const Navbar = () => {
 
 		if (token) {
 			const decodedToken = decode(token);
-
+			// AFTER THE USER HAS BEEN LOGGED IN FOR MORE THAN EXPIRY TIME OF TOKEN, IT WILL BE LOGGED OUT WHEN HE WILL VISIT IT AGAIN
 			if (decodedToken.exp * 1000 < new Date().getTime()) logout();
 		}
 

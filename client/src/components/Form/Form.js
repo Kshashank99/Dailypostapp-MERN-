@@ -8,7 +8,6 @@ import { createPost, updatePost } from "../../actions/posts";
 
 const Form = ({ currentId, setCurrentId }) => {
 	const [postData, setPostData] = useState({
-		creator: "",
 		title: "",
 		message: "",
 		tags: "",
@@ -34,6 +33,7 @@ const Form = ({ currentId, setCurrentId }) => {
 		e.preventDefault();
 
 		if (currentId === 0) {
+			// HERE WE ADD THE NAME PROPERTY TO THE USER IN LOCAL STORAGE
 			dispatch(createPost({ ...postData, name: user?.result?.name }));
 			clear();
 		} else {
@@ -43,6 +43,7 @@ const Form = ({ currentId, setCurrentId }) => {
 			clear();
 		}
 	};
+	// THIS WILL SHOW UP WHEN U TRY TO CREATE POST WITHOUT LOGGING IN
 	if (!user?.result?.name) {
 		return (
 			<Paper className={classes.paper}>
