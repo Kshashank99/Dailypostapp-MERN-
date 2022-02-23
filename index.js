@@ -26,6 +26,11 @@ app.use("/user", userRouter);
 const PORT = process.env.PORT || 5000;
 const CONNECTION_URL = process.env.CONNECTION_URL;
 
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+});
 // app.get('/',(req,res)=>{
 //   res.send('Hello to memories API')
 // })
@@ -34,12 +39,12 @@ const CONNECTION_URL = process.env.CONNECTION_URL;
 // listen on the given port no.or else it will throw an error
 
 mongoose
-	.connect(`${CONNECTION_URL}`, {
+	.connect(`${process.env.CONNECTION_URL}`, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	})
 	.then(() =>
-		app.listen(PORT, () =>
+		app.listen(5000 || process.env.PORT, () =>
 			console.log(`Server Running on Port: http://localhost:${PORT}`)
 		)
 	)
