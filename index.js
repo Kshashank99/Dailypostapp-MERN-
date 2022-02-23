@@ -6,8 +6,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import postRoutes from "./routes/posts.js";
 import userRouter from "./routes/users.js";
+import path from "path";
 
 const app = express();
+const __dirname = path.resolve();
+// const path = require("path");
 dotenv.config();
 // this ensures all the request of post would go through the
 // localhost:5000/posts/..... not localhost:5000/
@@ -22,9 +25,6 @@ app.use("/posts", postRoutes);
 app.use("/user", userRouter);
 
 // http://wwww.mongodb.com/cloud/atlas
-
-const PORT = process.env.PORT || 5000;
-const CONNECTION_URL = process.env.CONNECTION_URL;
 
 app.use(express.static(path.join(__dirname, "/client/build")));
 
@@ -45,7 +45,9 @@ mongoose
 	})
 	.then(() =>
 		app.listen(5000 || process.env.PORT, () =>
-			console.log(`Server Running on Port: http://localhost:${PORT}`)
+			console.log(
+				`Server Running on Port: http://localhost:${5000 || process.env.PORT}`
+			)
 		)
 	)
 	.catch((error) => console.log(`${error} did not connect`));

@@ -1,11 +1,11 @@
-import axios from "axios";
+// import axios from "axios";
 
-export const axiosInstance = axios.create({
-	// baseURL: "https://pixelverse.herokuapp.com/"
-	baseURL: "http://localhost:5000"
-});
+// const axiosInstance = axios.create({
+// 	baseURL: "http://localhost:5000 || https://pixelverse.herokuapp.com"
+// 	// baseURL: "http://localhost:5000"
+// });
 
-// import { axiosInstance } from "/config.js";
+import { axiosInstance } from "../config";
 
 const API = axiosInstance;
 
