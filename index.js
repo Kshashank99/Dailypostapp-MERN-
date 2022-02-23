@@ -44,11 +44,7 @@ mongoose
 		useUnifiedTopology: true
 	})
 	.then(() =>
-		app.listen(5000 || process.env.PORT, () =>
-			console.log(
-				`Server Running on Port: http://localhost:${5000 || process.env.PORT}`
-			)
-		)
+		app.listen(process.env.PORT || 5000, () => console.log(`Server started`))
 	)
 	.catch((error) => console.log(`${error} did not connect`));
 
