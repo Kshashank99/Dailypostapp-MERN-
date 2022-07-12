@@ -7,10 +7,11 @@ import useStyles from "./styles";
 
 const Posts = ({ setCurrentId }) => {
 	// HERE WITH USE OF USESELECTOR WE HAVE ACCESS TO WHOLE GLOBAL REDUX STATE WHICH WE CAN USE IN ANY COMPONENET ACROSS THE APP
-	const posts = useSelector((state) => state.posts); // HERE THE STATE IS GLOBAL STATE
+	const { posts, isLoading } = useSelector((state) => state.posts); // HERE THE STATE IS GLOBAL STATE
 	const classes = useStyles();
 
-	return !posts.length ? (
+	if (!posts.length && !isLoading) return "No posts";
+	return isLoading ? (
 		<CircularProgress />
 	) : (
 		<Grid
@@ -19,7 +20,7 @@ const Posts = ({ setCurrentId }) => {
 			alignItems='stretch'
 			spacing={3}>
 			{posts.map((post) => (
-				<Grid key={post._id} item xs={12} sm={6} md={6}>
+				<Grid key={post._id} item xs={12} sm={12} md={6} lg={3}>
 					<Post post={post} setCurrentId={setCurrentId} />
 				</Grid>
 			))}
