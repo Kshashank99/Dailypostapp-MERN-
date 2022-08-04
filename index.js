@@ -6,8 +6,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import postRoutes from "./routes/posts.js";
 import userRouter from "./routes/users.js";
+import path from "path";
 
 const app = express();
+const __dirname = path.resolve();
+// const path = require("path");
 dotenv.config();
 // this ensures all the request of post would go through the
 // localhost:5000/posts/..... not localhost:5000/
@@ -23,9 +26,11 @@ app.use("/user", userRouter);
 
 // http://wwww.mongodb.com/cloud/atlas
 
-const PORT = process.env.PORT || 5000;
-const CONNECTION_URL = process.env.CONNECTION_URL;
+app.use(express.static(path.join(__dirname, "/client/build")));
 
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+});
 // app.get('/',(req,res)=>{
 //   res.send('Hello to memories API')
 // })
@@ -34,19 +39,17 @@ const CONNECTION_URL = process.env.CONNECTION_URL;
 // listen on the given port no.or else it will throw an error
 
 mongoose
-	.connect(`${CONNECTION_URL}`, {
+	.connect(`${process.env.CONNECTION_URL}`, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	})
 	.then(() =>
-		app.listen(PORT, () =>
-			console.log(`Server Running on Port: http://localhost:${PORT}`)
-		)
+		app.listen(process.env.PORT || 5000, () => console.log(`Server started`))
 	)
 	.catch((error) => console.log(`${error} did not connect`));
 
 // to avoid warning in console
 mongoose.set("useFindAndModify", false);
-if (process.env.NODE_ENV === "production") {
-	app.use(express.static("client/build"));
-}
+// if (process.env.NODE_ENV === "production") {
+// 	app.use(express.static("client/build"));
+// }

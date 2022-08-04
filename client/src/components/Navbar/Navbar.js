@@ -42,15 +42,15 @@ const Navbar = () => {
 	return (
 		<AppBar className={classes.appBar} position='static' color='inherit'>
 			<div className={classes.brandContainer}>
+				<img className={classes.image} src={insta} alt='icon' height='60' />
 				<Typography
 					component={Link}
 					to='/'
 					className={classes.heading}
-					variant='h2'
+					variant='h3'
 					align='center'>
-					Pixel-Verse
+					Pixel Verse
 				</Typography>
-				<img className={classes.image} src={insta} alt='icon' height='60' />
 			</div>
 			<Toolbar className={classes.toolbar}>
 				{user?.result ? (
